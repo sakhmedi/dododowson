@@ -1,0 +1,81 @@
+:root {
+  --ink: #f4f2ee;
+  --ink-dim: rgba(244, 242, 238, 0.55);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  /* Fallback shown if WebGL is unavailable — same monochrome smoke palette */
+  background:
+    radial-gradient(120% 90% at 78% 18%, rgba(228, 228, 230, 0.22) 0%, transparent 42%),
+    radial-gradient(90% 70% at 18% 72%, rgba(180, 182, 188, 0.16) 0%, transparent 50%),
+    #050506;
+  color: var(--ink);
+  font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  display: block;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+}
+
+.eyebrow {
+  font-family: ui-sans-serif, "Helvetica Neue", Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.62em;
+  font-size: 0.66rem;
+  font-weight: 500;
+  color: var(--ink-dim);
+  padding-left: 0.62em; /* optical centering for tracked text */
+  margin-bottom: 2.4rem;
+}
+
+.wordmark {
+  font-weight: 300;
+  font-size: clamp(2rem, 13vw, 9.5rem);
+  letter-spacing: 0.04em;
+  line-height: 0.95;
+  max-width: 100%;
+  color: var(--ink);
+  text-shadow: 0 1px 40px rgba(0, 0, 0, 0.55);
+}
+
+.tagline {
+  margin-top: 1.8rem;
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Motion is also calmed in JS; nothing further needed here */
+}

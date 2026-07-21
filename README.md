@@ -1,9 +1,31 @@
 # dododowson
 
-Official website for **dododowson** — a new-generation rap artist from Kazakhstan.
+An **unofficial fan page** for **dododowson**, a rapper from Kazakhstan. Not affiliated with
+the artist or their management — every release links out to the official platforms.
 A single scrolling page: Hero → Music → Videos → Concerts → About. Trilingual (KZ / RU / EN).
 
 No build step, no framework. Just open `index.html` in a browser.
+
+---
+
+## ⚠️ The one rule: only verified information
+
+This page is about a real person. Everything in `content.js` — every release, year,
+link and video ID — was checked against the artist's own pages:
+
+| | |
+|---|---|
+| Apple Music | <https://music.apple.com/us/artist/dododowson/1544969924> |
+| Spotify | <https://open.spotify.com/artist/6fTZMQt93BHLcHHX1DTSbn> |
+| YouTube | <https://www.youtube.com/@dododowson> |
+| Instagram | <https://www.instagram.com/dododowson/> |
+
+If you can't confirm something on one of those, **leave it out**. Blank fields are a
+supported state — the site renders placeholder tiles and a "no announced dates" line
+without looking broken. Never invent a tour date, a quote, a bio detail or a collaborator.
+
+Also: don't publish anyone's personal contact details here (phone numbers, private
+emails), even if you found them on a public profile.
 
 ---
 
@@ -27,8 +49,9 @@ Add a block to `videos: [ … ]`. The `youtubeId` is the code after `v=` in a Yo
 (The thumbnail is pulled from YouTube automatically; the video only loads when clicked.)
 
 ### Add a concert
-Add a row to `concerts: [ … ]`. **Past dates move to “Past shows” automatically** — you never
-need to delete old ones.
+`concerts: [ … ]` is deliberately **empty** — no shows have been publicly announced that could
+be verified. Add a row only from an official announcement. **Past dates move to “Past shows”
+automatically** — you never need to delete old ones.
 
 ### Change a language / bio / tagline
 Edit the matching `kz` / `ru` / `en` text. The `defaultLang` at the top sets the first-visit language.

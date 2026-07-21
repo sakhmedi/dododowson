@@ -237,22 +237,73 @@ body {
   cursor: pointer; overflow: hidden;
 }
 .video-frame .tile-img, .video-frame .tile-ph { aspect-ratio: 16 / 9; }
+
+/* still frame + optional looping preview share one box */
+.video-media { position: relative; overflow: hidden; }
+.video-media .tile-img, .video-media .tile-ph {
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s;
+}
+.video-frame:hover .video-media .tile-img { transform: scale(1.045); filter: brightness(1.06); }
+
+.video-preview {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0; transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.video-preview.is-on { opacity: 1; }
+
 .video-play {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  font-size: 2.4rem; color: var(--ink);
   background: rgba(5,5,6,0.28);
-  transition: background 0.25s;
+  transition: background 0.3s;
+  font-size: 0;                       /* the glyph is drawn by ::before */
 }
-.video-frame:hover .video-play { background: rgba(5,5,6,0.08); }
+.video-play::before {
+  content: "▸";
+  display: flex; align-items: center; justify-content: center;
+  width: 3.4rem; height: 3.4rem;
+  padding-left: 0.22em;               /* optically centre the triangle */
+  border: 1px solid rgba(244, 242, 238, 0.5);
+  border-radius: 50%;
+  font-size: 1.7rem; line-height: 1; color: var(--ink);
+  background: rgba(5, 5, 6, 0.3);
+  backdrop-filter: blur(2px);
+  transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+              background 0.3s, border-color 0.3s;
+}
+.video-frame:hover .video-play { background: rgba(5,5,6,0.12); }
+.video-frame:hover .video-play::before {
+  transform: scale(1.12);
+  background: rgba(5, 5, 6, 0.5);
+  border-color: var(--ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .video-media .tile-img, .video-play::before { transition: none; }
+  .video-frame:hover .video-media .tile-img,
+  .video-frame:hover .video-play::before { transform: none; }
+}
 .video-embed {
   width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line); display: block;
+}
+.video-meta {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem; margin-top: 0.7rem;
 }
 .video-title {
   font-family: var(--sans);
   font-size: 0.78rem; letter-spacing: 0.06em; color: var(--ink-dim);
-  margin-top: 0.7rem;
 }
+.video-link {
+  flex: none;
+  font-family: var(--sans);
+  font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(244, 242, 238, 0.38); text-decoration: none;
+  transition: color 0.25s;
+}
+.video-link:hover { color: var(--ink); }
 
 /* ============================ CONCERTS ============================ */
 .shows-heading {
@@ -319,6 +370,13 @@ body {
   font-size: 0.7rem; letter-spacing: 0.1em;
   color: var(--ink-dim);
   text-align: center;
+}
+.foot-note {
+  display: block;
+  margin-top: 0.9rem;
+  max-width: 46rem; margin-inline: auto;
+  font-size: 0.64rem; letter-spacing: 0.08em; line-height: 1.7;
+  opacity: 0.65;
 }
 
 /* ============================ RESPONSIVE ========================= */

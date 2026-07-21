@@ -87,6 +87,61 @@
   }
 
   /* ---- VIDEOS (click-to-play facade) ------------------------------------- */
+
+  /* Optional looping preview that fades in over the still frame on hover.
+     Accepts .mp4/.webm (preferred — far smaller than a GIF) or .gif.
+     Nothing is downloaded until the pointer actually reaches the tile, and if
+     the file is missing the layer removes itself and the still frame stays. */
+  function previewLayer(src, frame) {
+    var isGif = /\.gif($|\?)/i.test(src);
+    var node;
+
+    if (isGif) {
+      node = el("img", "video-preview");
+      node.alt = "";
+      node.dataset.src = src;                 // real src set on first hover
+    } else {
+      node = document.createElement("video");
+      node.className = "video-preview";
+      node.muted = true; node.loop = true; node.playsInline = true;
+      node.setAttribute("muted", "");          // Safari wants the attribute too
+      node.setAttribute("playsinline", "");
+      node.preload = "none";
+      node.dataset.src = src;
+    }
+    node.addEventListener("error", function () { node.remove(); });
+
+    /* Only ever reveal the layer once it can actually paint a frame —
+       otherwise a missing or still-loading file shows as a black box. */
+    var started = false, ready = false, wanted = false;
+    function markReady() { ready = true; if (wanted) node.classList.add("is-on"); }
+    node.addEventListener(isGif ? "load" : "loadeddata", markReady);
+
+    function start() {
+      wanted = true;
+      if (!started) {
+        started = true;
+        node.src = node.dataset.src;
+        if (!isGif) node.preload = "auto";
+      }
+      if (!isGif) {
+        var p = node.play();
+        if (p && p.catch) p.catch(function () {});   // autoplay refusal is fine
+      }
+      if (ready) node.classList.add("is-on");
+    }
+    function stop() {
+      wanted = false;
+      node.classList.remove("is-on");
+      if (!isGif && node.pause) node.pause();
+    }
+    frame.addEventListener("mouseenter", start);
+    frame.addEventListener("focus", start);
+    frame.addEventListener("mouseleave", stop);
+    frame.addEventListener("blur", stop);
+    return node;
+  }
+
   function renderVideos() {
     var grid = document.getElementById("videos-grid");
     grid.innerHTML = "";
@@ -98,7 +153,11 @@
 
       var posterSrc = safeUrlOrPath(v.poster) ? v.poster
         : (v.youtubeId ? "https://i.ytimg.com/vi/" + encodeURIComponent(v.youtubeId) + "/hqdefault.jpg" : "");
-      frame.appendChild(coverTile(posterSrc, t(v.title)));
+
+      var media = el("div", "video-media");
+      media.appendChild(coverTile(posterSrc, t(v.title)));
+      if (safeUrlOrPath(v.preview)) media.appendChild(previewLayer(v.preview, frame));
+      frame.appendChild(media);
       frame.appendChild(el("span", "video-play", "▸"));
 
       frame.addEventListener("click", function () {
@@ -114,7 +173,17 @@
       });
 
       wrap.appendChild(frame);
-      wrap.appendChild(el("p", "video-title", t(v.title)));
+
+      var meta = el("div", "video-meta");
+      meta.appendChild(el("p", "video-title", t(v.title)));
+      // Fallback: embeds are blocked when the page is opened straight from disk
+      // (file://), so always offer the video on YouTube itself.
+      if (v.youtubeId) {
+        meta.appendChild(extLink(
+          "https://www.youtube.com/watch?v=" + encodeURIComponent(v.youtubeId),
+          "video-link", "YouTube ↗"));
+      }
+      wrap.appendChild(meta);
       grid.appendChild(wrap);
     });
   }

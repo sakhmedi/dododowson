@@ -133,6 +133,9 @@
   });
 
   // The field is static; the loop runs only so the light glides toward the cursor.
+  // We pause it whenever the hero is scrolled out of view to keep the rest of the
+  // page cheap (the smoke is a hero-only backdrop).
+  var running = false;
   function frame() {
     current.x += (target.x - current.x) * 0.08;
     current.y += (target.y - current.y) * 0.08;
@@ -140,7 +143,17 @@
     gl.uniform2f(uMouse, current.x, current.y);
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-    requestAnimationFrame(frame);
+    if (running) requestAnimationFrame(frame);
   }
-  frame(); // paint the first frame immediately (centered light), then keep tracking the cursor
+  function start() { if (!running) { running = true; requestAnimationFrame(frame); } }
+  function stop() { running = false; }
+
+  var hero = document.getElementById("hero") || canvas.parentNode;
+  if (hero && "IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      entries[0] && entries[0].isIntersecting ? start() : stop();
+    }, { threshold: 0.01 }).observe(hero);
+  } else {
+    start(); // no observer support: just keep it running
+  }
 })();

@@ -1,24 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>dododowson</title>
+  <meta name="description" content="dododowson — new-generation rap artist from Kazakhstan. Music, videos, tour dates." />
+
+  <!-- Social share cards (Telegram / Instagram / WhatsApp / X) -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="dododowson" />
+  <meta property="og:description" content="Form found in the dark. Music, videos & tour dates." />
+  <meta property="og:image" content="img/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23050506'/><text x='32' y='45' font-size='40' text-anchor='middle' fill='%23f4f2ee' font-family='Georgia,serif'>d</text></svg>" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Animated WebGL background; CSS gradient on body shows through if it fails -->
-  <canvas id="bg" aria-hidden="true"></canvas>
+  <!-- Sticky top navigation -->
+  <header class="nav" id="top">
+    <a class="nav-brand" href="#top">dododowson</a>
+    <nav class="nav-links" aria-label="Sections">
+      <a class="nav-link" href="#music"    data-ui="music"></a>
+      <a class="nav-link" href="#videos"   data-ui="videos"></a>
+      <a class="nav-link" href="#concerts" data-ui="concerts"></a>
+      <a class="nav-link" href="#about"    data-ui="about"></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button class="lang-btn" type="button" data-lang="kz">KZ</button>
+      <span class="lang-sep">·</span>
+      <button class="lang-btn" type="button" data-lang="ru">RU</button>
+      <span class="lang-sep">·</span>
+      <button class="lang-btn" type="button" data-lang="en">EN</button>
+    </div>
+  </header>
 
-  <main class="hero">
-    <p class="eyebrow">est. mmxxvi</p>
-    <h1 class="wordmark">dododowson</h1>
-    <p class="tagline">Form found in the dark.</p>
+  <main>
+    <!-- HERO with the WebGL smoke background -->
+    <section class="hero" id="hero">
+      <canvas id="bg" aria-hidden="true"></canvas>
+      <p class="eyebrow">est. mmxxvi</p>
+      <h1 class="wordmark">dododowson</h1>
+      <p class="tagline">Form found in the dark.</p>
+    </section>
+
+    <!-- MUSIC -->
+    <section class="band" id="music">
+      <p class="section-eyebrow" data-ui="music"></p>
+      <div class="grid reveal" id="music-grid"></div>
+    </section>
+
+    <!-- VIDEOS -->
+    <section class="band" id="videos">
+      <p class="section-eyebrow" data-ui="videos"></p>
+      <div class="grid grid-video reveal" id="videos-grid"></div>
+    </section>
+
+    <!-- CONCERTS -->
+    <section class="band" id="concerts">
+      <p class="section-eyebrow" data-ui="concerts"></p>
+      <div class="concerts reveal" id="concerts-body"></div>
+    </section>
+
+    <!-- ABOUT + CONTACT -->
+    <section class="band" id="about">
+      <p class="section-eyebrow" data-ui="about"></p>
+      <div class="about reveal">
+        <div class="about-photo" id="about-photo"></div>
+        <div class="about-text">
+          <p class="about-bio" id="about-bio"></p>
+          <div class="about-links" id="about-links"></div>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <footer class="foot">
+    <span>© <span id="year"></span> dododowson</span>
+  </footer>
+
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
   <script src="background.js"></script>
 </body>
 </html>

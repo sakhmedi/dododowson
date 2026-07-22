@@ -26,10 +26,10 @@
   <header class="nav" id="top">
     <a class="nav-brand" href="#top">dododowson</a>
     <nav class="nav-links" aria-label="Sections">
+      <a class="nav-link" href="#about"    data-ui="about"></a>
       <a class="nav-link" href="#music"    data-ui="music"></a>
       <a class="nav-link" href="#videos"   data-ui="videos"></a>
       <a class="nav-link" href="#concerts" data-ui="concerts"></a>
-      <a class="nav-link" href="#about"    data-ui="about"></a>
     </nav>
     <div class="lang" role="group" aria-label="Language">
       <button class="lang-btn" type="button" data-lang="kz">KZ</button>
@@ -41,12 +41,16 @@
   </header>
 
   <main>
-    <!-- HERO with the WebGL smoke background -->
-    <section class="hero" id="hero">
-      <canvas id="bg" aria-hidden="true"></canvas>
-      <p class="eyebrow">since 2020</p>
-      <h1 class="wordmark">dododowson</h1>
-      <p class="tagline">Рэп из Казахстана.</p>
+    <!-- ABOUT + CONTACT (landing section) -->
+    <section class="band" id="about">
+      <p class="section-eyebrow" data-ui="about"></p>
+      <div class="about reveal">
+        <div class="about-photo" id="about-photo"></div>
+        <div class="about-text">
+          <p class="about-bio" id="about-bio"></p>
+          <div class="about-links" id="about-links"></div>
+        </div>
+      </div>
     </section>
 
     <!-- MUSIC -->
@@ -67,17 +71,6 @@
       <div class="concerts reveal" id="concerts-body"></div>
     </section>
 
-    <!-- ABOUT + CONTACT -->
-    <section class="band" id="about">
-      <p class="section-eyebrow" data-ui="about"></p>
-      <div class="about reveal">
-        <div class="about-photo" id="about-photo"></div>
-        <div class="about-text">
-          <p class="about-bio" id="about-bio"></p>
-          <div class="about-links" id="about-links"></div>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="foot">

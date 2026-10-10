@@ -1,8 +1,8 @@
 # dododowson
 
-An **unofficial fan page** for **dododowson**, a rapper from Kazakhstan. Not affiliated with
-the artist or their management — every release links out to the official platforms.
-A single scrolling page: Hero → Music → Videos → Concerts → About. Trilingual (KZ / RU / EN).
+Website of **dododowson**, a rapper from Kazakhstan. Every release links out to the official platforms.
+A single scrolling page: Hero → Releases → Videos → Concerts. Trilingual (KZ / RU / EN);
+section titles and the menu stay in English on purpose.
 
 No build step, no framework. Just open `index.html` in a browser.
 
@@ -41,20 +41,31 @@ A few rules:
 - Dates are `YYYY-MM-DD` (e.g. `"2026-08-14"`).
 
 ### Add an album
-Copy one `{ … }` block inside `albums: [ … ]` and edit the title, year, features and links.
+Copy one `{ … }` block inside `albums: [ … ]` and edit the title, `type` (`"single"`, `"ep"` or
+`"album"`), year, features and links. Put the newest first — the first one is shown as
+"New release" at the top. Releases are grouped by year automatically.
+Featured artists in `features` are shown as `feat. A, B` in all three languages.
 
 ### Add a music video
-Add a block to `videos: [ … ]`. The `youtubeId` is the code after `v=` in a YouTube URL:
+Add a block to `videos: [ … ]` with `artist`, `title` and `youtubeId` — the code after `v=` in a YouTube URL:
 `youtube.com/watch?v=`**`dQw4w9WgXcQ`** → `youtubeId: "dQw4w9WgXcQ"`.
-(The thumbnail is pulled from YouTube automatically; the video only loads when clicked.)
+(The thumbnail and the hover preview frames are pulled from YouTube automatically; the video only
+loads when clicked. Opened straight from disk (`file://`), YouTube refuses to play embeds — use the
+"YouTube ↗" link, or view the site on GitHub Pages.)
 
 ### Add a concert
 `concerts: [ … ]` is deliberately **empty** — no shows have been publicly announced that could
 be verified. Add a row only from an official announcement. **Past dates move to “Past shows”
 automatically** — you never need to delete old ones.
 
-### Change a language / bio / tagline
-Edit the matching `kz` / `ru` / `en` text. The `defaultLang` at the top sets the first-visit language.
+### Change a language / tagline
+Edit the matching `kz` / `ru` / `en` text in `ui` (the tagline is `bio`). The `defaultLang` at the top
+sets the first-visit language.
+
+### Colour or black-and-white covers
+`coverStyle: "color"` (the default) shows album covers and video thumbnails in their original colours;
+`"bw"` shows them in greyscale.
+`heroDither.animate: false` stops the grain on the portrait at the top.
 
 ---
 
@@ -64,7 +75,7 @@ Placeholders show automatically, so images aren't required. To add real art, dro
 the `img/` folder and point to them in `content.js`, e.g. `cover: "img/album1.jpg"`.
 
 - Album covers: square (1:1), ~1000×1000px
-- Press photo: portrait (4:5)
+- Hero portrait: `img/dododowson.jpeg` (`heroDither.photo` in `content.js`)
 - `img/og.jpg`: a 1200×630px image used when the link is shared on Telegram/Instagram
 
 ---
@@ -89,4 +100,5 @@ Netlify or Vercel (drag-and-drop the folder) work the same way.
 | `index.html` | Page structure (rarely touched). |
 | `styles.css` | Look & feel. |
 | `app.js` | Builds the sections from `content.js`. |
-| `background.js` | The animated smoke background in the hero. |
+| `dither.js` | The live black-and-white dither portrait in the hero. |
+| `fonts.css` | Latin-only display/mono fonts (Cyrillic falls back to Onest). |

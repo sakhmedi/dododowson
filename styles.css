@@ -282,6 +282,9 @@ h1, h2, p { margin: 0; }
   padding: 0; border: 0;
   background: var(--tile-2);
   cursor: pointer; overflow: hidden;
+  -webkit-touch-callout: none;          /* no "save image" sheet on long-press */
+  -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .vid-thumb, .vid-preview {
   position: absolute; inset: 0;

@@ -1,0 +1,16 @@
+# Security headers for every page (read by Netlify and Cloudflare Pages).
+#
+# Content-Security-Policy lists every outside host the site uses:
+#   fonts.googleapis.com / fonts.gstatic.com — fonts
+#   i.ytimg.com                              — video thumbnails and hover frames
+#   www.youtube.com                          — the video player
+# If you add something from a new site (e.g. a SoundCloud player), add its host
+# here too, otherwise the browser will block it.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https://i.ytimg.com; media-src 'self'; frame-src https://www.youtube.com; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()
+  Cross-Origin-Opener-Policy: same-origin

@@ -1,86 +1,95 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-covers="bw">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>dododowson — fan page</title>
-  <meta name="description" content="Unofficial fan page for dododowson, a rapper from Kazakhstan. Releases, videos and links to the official platforms." />
+  <title>dododowson</title>
+  <meta name="description" content="dododowson — releases, videos and concerts." />
+  <meta name="theme-color" content="#000000" />
 
   <!-- Social share cards (Telegram / Instagram / WhatsApp / X) -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="dododowson — fan page" />
-  <meta property="og:description" content="Unofficial fan page: releases, videos and official links." />
+  <meta property="og:title" content="dododowson" />
+  <meta property="og:description" content="Releases, videos and concerts." />
   <!-- Drop a 1200x630 image at img/og.jpg for the share card to appear. -->
   <meta property="og:image" content="img/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23050506'/><text x='32' y='45' font-size='40' text-anchor='middle' fill='%23f4f2ee' font-family='Georgia,serif'>d</text></svg>" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' fill='%23000'/><text x='32' y='46' font-size='40' font-weight='900' text-anchor='middle' fill='%23f2f2f0' font-family='Arial,sans-serif'>D</text></svg>" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="fonts.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- Sticky top navigation -->
-  <header class="nav" id="top">
-    <a class="nav-brand" href="#top">dododowson</a>
-    <nav class="nav-links" aria-label="Sections">
-      <a class="nav-link" href="#about"    data-ui="about"></a>
-      <a class="nav-link" href="#music"    data-ui="music"></a>
-      <a class="nav-link" href="#videos"   data-ui="videos"></a>
-      <a class="nav-link" href="#concerts" data-ui="concerts"></a>
-    </nav>
-    <div class="lang" role="group" aria-label="Language">
-      <button class="lang-btn" type="button" data-lang="kz">KZ</button>
-      <span class="lang-sep">·</span>
-      <button class="lang-btn" type="button" data-lang="ru">RU</button>
-      <span class="lang-sep">·</span>
-      <button class="lang-btn" type="button" data-lang="en">EN</button>
+  <div class="flash" id="flash" aria-hidden="true" hidden></div>
+
+  <header class="head">
+    <a class="brand" href="#top">dododowson</a>
+    <div class="head-right">
+      <nav class="nav" aria-label="Sections">
+        <a class="nav-link" href="#releases">Releases</a>
+        <a class="nav-link" href="#videos">Videos</a>
+        <a class="nav-link" href="#concerts">Concerts</a>
+      </nav>
+      <div class="lang" id="lang">
+        <button class="lang-btn" id="lang-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu">
+          <span id="lang-cur">RU</span><span class="tri-down" aria-hidden="true"></span>
+        </button>
+        <div class="lang-menu" id="lang-menu" role="menu" hidden></div>
+      </div>
     </div>
   </header>
 
   <main>
-    <!-- ABOUT + CONTACT (landing section) -->
-    <section class="band" id="about">
-      <p class="section-eyebrow" data-ui="about"></p>
-      <div class="about reveal">
-        <div class="about-photo" id="about-photo"></div>
-        <div class="about-text">
-          <p class="about-bio" id="about-bio"></p>
-          <div class="about-links" id="about-links"></div>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero-photo">
+        <canvas class="dither" id="dither" role="img" aria-label="dododowson"></canvas>
+      </div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-shade-2" aria-hidden="true"></div>
+
+      <div class="hero-body">
+        <h1 class="wordmark">dodo<br />dowson</h1>
+        <div class="hero-meta">
+          <p class="tagline" id="tagline"></p>
+          <div class="latest" id="latest"></div>
         </div>
       </div>
     </section>
 
-    <!-- MUSIC -->
-    <section class="band" id="music">
-      <p class="section-eyebrow" data-ui="music"></p>
-      <div class="grid reveal" id="music-grid"></div>
+    <!-- RELEASES -->
+    <section class="sec sec-releases" id="releases">
+      <h2 class="sec-title">Releases</h2>
+      <div class="years" id="years"></div>
     </section>
 
     <!-- VIDEOS -->
-    <section class="band" id="videos">
-      <p class="section-eyebrow" data-ui="videos"></p>
-      <div class="grid grid-video reveal" id="videos-grid"></div>
+    <section class="sec sec-videos" id="videos">
+      <h2 class="sec-title">Videos</h2>
+      <div class="videos" id="videos-grid"></div>
     </section>
 
     <!-- CONCERTS -->
-    <section class="band" id="concerts">
-      <p class="section-eyebrow" data-ui="concerts"></p>
-      <div class="concerts reveal" id="concerts-body"></div>
+    <section class="sec sec-concerts" id="concerts">
+      <h2 class="sec-title">Concerts</h2>
+      <div class="shows-box" id="concerts-body"></div>
     </section>
-
   </main>
 
   <footer class="foot">
-    <span>© <span id="year"></span> dododowson</span>
-    <span class="foot-note" data-ui="disclaimer"></span>
+    <span class="foot-ghost" aria-hidden="true">dododowson</span>
+    <div class="foot-row">
+      <span>© <span id="year"></span> dododowson</span>
+      <div class="foot-links" id="foot-links"></div>
+    </div>
   </footer>
 
-  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
   <script src="content.js"></script>
+  <script src="dither.js"></script>
   <script src="app.js"></script>
-  <script src="background.js"></script>
 </body>
 </html>

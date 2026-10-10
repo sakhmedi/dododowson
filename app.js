@@ -16,6 +16,8 @@
   var STORE_KEY = "dododowson.lang";
   var FLASH_MS = 90;
   var FRAME_MS = 320;
+  var LONG_PRESS_MS = 300;                  // touch: hold this long to preview
+  var MOVE_TOLERANCE = 10;                  // px a finger may drift before it counts as a scroll
   var FRAMES = ["hq1", "hq2", "hq3"];       // YouTube's auto frames at 25/50/75%
   var reduceMotion = window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -259,7 +261,7 @@
 
     var poster = hasPath(v.poster) ? v.poster : (id ? ytImg(id, "hqdefault") : "");
     var thumb = el("img", "vid-thumb");
-    thumb.alt = ""; thumb.loading = "lazy";
+    thumb.alt = ""; thumb.loading = "lazy"; thumb.draggable = false;
     if (poster) thumb.src = poster; else thumb.hidden = true;
     btn.appendChild(thumb);
 
@@ -283,10 +285,39 @@
 
     function on()  { if (preview) preview.start(); else enterVideo(i); }
     function off() { if (preview) preview.stop(); else if (hoverVideo === i) leaveVideo(); }
-    btn.addEventListener("mouseenter", on);
-    btn.addEventListener("focus", on);
-    btn.addEventListener("mouseleave", off);
+    // Mouse only: on phones a tap would otherwise fire an emulated hover first.
+    btn.addEventListener("pointerenter", function (e) { if (e.pointerType === "mouse") on(); });
+    btn.addEventListener("pointerleave", function (e) { if (e.pointerType === "mouse") off(); });
+    btn.addEventListener("focus", function () { if (!touching) on(); });
     btn.addEventListener("blur", off);
+
+    /* Touch: long-press shows the same preview while the finger stays down.
+       A quick tap still plays the video; a swipe still scrolls the page. */
+    var touching = false, pressTimer = null, pressed = false, sx = 0, sy = 0;
+    btn.addEventListener("touchstart", function (e) {
+      if (e.touches.length !== 1) { clearTimeout(pressTimer); return; }
+      touching = true; pressed = false;
+      sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+      clearTimeout(pressTimer);
+      pressTimer = setTimeout(function () { pressed = true; on(); }, LONG_PRESS_MS);
+    }, { passive: true });
+    btn.addEventListener("touchmove", function (e) {
+      if (pressed) { if (e.cancelable) e.preventDefault(); return; }   // previewing: hold the page still
+      var p = e.touches[0];
+      if (Math.abs(p.clientX - sx) > MOVE_TOLERANCE || Math.abs(p.clientY - sy) > MOVE_TOLERANCE) clearTimeout(pressTimer);
+    }, { passive: false });
+    function endPress(e) {
+      clearTimeout(pressTimer);
+      if (pressed) {
+        if (e.cancelable) e.preventDefault();   // swallow the click: releasing must not start playback
+        pressed = false;
+        off();
+      }
+      setTimeout(function () { touching = false; }, 400);
+    }
+    btn.addEventListener("touchend", endPress);
+    btn.addEventListener("touchcancel", endPress);
+    btn.addEventListener("contextmenu", function (e) { if (touching) e.preventDefault(); });
 
     btn.addEventListener("click", function () {
       if (!id) return;                   // nothing to play yet (placeholder)

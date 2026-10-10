@@ -32,7 +32,7 @@ window.SITE = {
   /* Album covers and video thumbnails:
        "bw"    — greyscale
        "color" — original colours                                              */
-  coverStyle: "bw",
+  coverStyle: "color",
 
   /* Portrait at the top of the page, drawn as a live black-and-white dither.
      animate: false  — keep it still (it is also still for visitors who turned
@@ -62,14 +62,6 @@ window.SITE = {
           follow: "Announcements on Instagram", lang: "Language",
           tickets: "Tickets", past: "Past shows" }
   },
-
-  /* Kazakh "with" ending for each featured artist, used as
-     "dudeontheguitar’мен бірге". When you add a new name, pick by its last sound:
-       vowels, р, л, й, у            → "мен"
-       м, н, ң, з, ж                 → "бен"
-       voiceless consonants, б, в, г, д → "пен"
-     A name missing here gets "мен".                                           */
-  kzWith: { dudeontheguitar: "мен", Atlass: "пен", Legion: "бен", SHAKRAT: "пен", Iceone: "бен" },
 
   /* Official profiles (footer + concerts button). */
   links: {

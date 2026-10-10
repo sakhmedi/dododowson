@@ -78,14 +78,9 @@
     return "https://i.ytimg.com/vi/" + encodeURIComponent(id) + "/" + name + ".jpg";
   }
 
-  /* Feature credit. RU/EN: "feat. A, B".
-     KZ: "A және B’мен бірге" — the ending sits on the last name only. */
+  /* Feature credit — "feat. A, B" in every language (the names are Latin). */
   function featText(names) {
-    if (!names || !names.length) return "";
-    if (lang !== "kz") return "feat. " + names.join(", ");
-    var last = names[names.length - 1], head = names.slice(0, -1);
-    var suffix = (SITE.kzWith && SITE.kzWith[last]) || "мен";
-    return (head.length ? head.join(", ") + " және " : "") + last + "’" + suffix + " бірге";
+    return names && names.length ? "feat. " + names.join(", ") : "";
   }
   function releaseMeta(al) {
     var parts = [];

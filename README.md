@@ -44,9 +44,7 @@ A few rules:
 Copy one `{ … }` block inside `albums: [ … ]` and edit the title, `type` (`"single"`, `"ep"` or
 `"album"`), year, features and links. Put the newest first — the first one is shown as
 "New release" at the top. Releases are grouped by year automatically.
-
-If a new featured artist appears, add their Kazakh "with" ending to `kzWith`
-(e.g. `dudeontheguitar’мен бірге`). The rule is written next to `kzWith` in `content.js`.
+Featured artists in `features` are shown as `feat. A, B` in all three languages.
 
 ### Add a music video
 Add a block to `videos: [ … ]` with `artist`, `title` and `youtubeId` — the code after `v=` in a YouTube URL:
@@ -65,7 +63,8 @@ Edit the matching `kz` / `ru` / `en` text in `ui` (the tagline is `bio`). The `d
 sets the first-visit language.
 
 ### Colour or black-and-white covers
-`coverStyle: "bw"` shows album covers and video thumbnails in greyscale; `"color"` shows the originals.
+`coverStyle: "color"` (the default) shows album covers and video thumbnails in their original colours;
+`"bw"` shows them in greyscale.
 `heroDither.animate: false` stops the grain on the portrait at the top.
 
 ---
